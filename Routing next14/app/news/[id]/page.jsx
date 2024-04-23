@@ -1,4 +1,4 @@
-
+//... id page
 import React from 'react'
 
 function NewsDetailPage({params}) {

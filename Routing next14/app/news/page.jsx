@@ -1,3 +1,4 @@
+//news page
 import { DUMMY_NEWS } from "@/dummy-news";
 import Link from "next/link";
 import React from "react";
