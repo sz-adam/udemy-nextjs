@@ -1,12 +1,13 @@
 //news page
 
 import { DUMMY_NEWS } from "@/Dummy-news";
+import NewList from "@/components/NewList";
 
 function NewsPage() {
   return (
     <>
       <h1>News Page</h1>
-        <NewsList news={DUMMY_NEWS}/>
+        <NewList news={DUMMY_NEWS}/>
     </>
   );
 }
