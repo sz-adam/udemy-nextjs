@@ -35,6 +35,14 @@ export default function FilteredNewspage({ params }) {
     newsContent = <NewList news={news} />;
   }
 
+  if (
+    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedMonth &&
+      !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+  ) {
+    throw new Error("Invalid filter");
+  }
+
   return (
     <>
       <header id="archive-header">
