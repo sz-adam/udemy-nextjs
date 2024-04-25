@@ -1,31 +1,29 @@
-//év kiírása
+import Link from 'next/link';
 
-// dupla [] és a ... standard utvonalból gyüjtő utvonallá alakítja
-
-import NewList from "@/components/NewList";
 import {
   getAvailableNewsMonths,
   getAvailableNewsYears,
   getNewsForYear,
   getNewsForYearAndMonth,
-} from "@/lib/news";
-import Link from "next/link";
+} from '@/lib/news';
+import NewList from '@/components/NewList';
 
-export default function FilteredNewspage({ params }) {
+export default async function FilteredNewsPage({ params }) {
   const filter = params.filter;
 
   const selectedYear = filter?.[0];
   const selectedMonth = filter?.[1];
 
   let news;
-  let links = getAvailableNewsYears();
+  let links = await getAvailableNewsYears();
 
   if (selectedYear && !selectedMonth) {
-    news = getNewsForYear(selectedYear);
+    news = await getNewsForYear(selectedYear);
     links = getAvailableNewsMonths(selectedYear);
   }
+
   if (selectedYear && selectedMonth) {
-    news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+    news = await getNewsForYearAndMonth(selectedYear, selectedMonth);
     links = [];
   }
 
@@ -35,12 +33,14 @@ export default function FilteredNewspage({ params }) {
     newsContent = <NewList news={news} />;
   }
 
+  const availableYears = await getAvailableNewsYears();
+
   if (
-    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedYear && !availableYears.includes(selectedYear)) ||
     (selectedMonth &&
-      !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+      !getAvailableNewsMonths(selectedYear).includes(selectedMonth))
   ) {
-    throw new Error("Invalid filter");
+    throw new Error('Invalid filter.');
   }
 
   return (
@@ -52,6 +52,7 @@ export default function FilteredNewspage({ params }) {
               const href = selectedYear
                 ? `/archive/${selectedYear}/${link}`
                 : `/archive/${link}`;
+
               return (
                 <li key={link}>
                   <Link href={href}>{link}</Link>
@@ -64,6 +65,4 @@ export default function FilteredNewspage({ params }) {
       {newsContent}
     </>
   );
-  //   const news =getNewsForYear(newsYear)
-  //return <NewList news={news} />
 }
