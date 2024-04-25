@@ -3,7 +3,7 @@ import NewList from "@/components/NewList";
 import { getAllNews } from "@/lib/news";
 
 async function NewsPage() {
-const news =getAllNews()
+const news = awaitgetAllNews()
 
   return (
     <>
